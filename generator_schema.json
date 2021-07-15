@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "row_count": {
+      "type": "integer"
+    },
+    "data_gen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of the field",
+            "type": "string"
+          },
+          "data_type": {
+            "description": "Type of the field",
+            "type": "string"
+          },
+          "range": {
+            "description": "range if applicable",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "constant_value": {
+            "description": "whether the column values are constants",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "data_type"
+        ]
+      }
+    }
+  },
+  "required": [
+    "row_count",
+    "data_gen"
+  ]
+}
