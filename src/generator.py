@@ -28,9 +28,12 @@ class Generator(object):
 
         for value in range(self.data.get('row_count')):
             data_list = []
+            # fake date - used to generate multiple columns like year, month, day, year_month
+            date = fake.date()
             for i in range(len(data)):
                 data_type = data[i].get('data_type')
                 value_range = data[i].get('range')
+                enums = data[i].get('enums')
                 if data_type == 'first_name':
                     data_list.append(fake.unique.first_name())
                 elif data_type == 'last_name':
@@ -48,13 +51,15 @@ class Generator(object):
                 elif data_type == 'file_name':
                     data_list.append(str(fake.file_path(depth=5, extension='parquet')))
                 elif data_type == 'date':
-                    data_list.append(fake.date())
+                    data_list.append(date)
                 elif data_type == 'year':
-                    data_list.append(fake.year())
+                    data_list.append(date.split('-')[0])
                 elif data_type == 'month':
-                    data_list.append(fake.month())
+                    data_list.append(date.split('-')[1])
                 elif data_type == 'day':
-                    data_list.append(fake.day_of_month())
+                    data_list.append(date.split('-')[2])
+                elif data_type == 'year_month':
+                    data_list.append(date.split('-')[0] + date.split('-')[1])
                 elif data_type == 'int':
                     if value_range is None:
                         data_list.append(fake.random_int(min=0, max=9999))
@@ -65,6 +70,9 @@ class Generator(object):
                         data_list.append(fake.pydecimal(right_digits=4, positive=True))
                     else:
                         data_list.append(fake.pydecimal(left_digits=value_range[0], right_digits=value_range[1], positive=True))
+                # generates a random element from list of elements
+                elif data_type == 'constant':
+                    data_list.append(fake.random_element(elements=enums))
                 else:
                     data_list.append(data_type)
 

@@ -1,12 +1,7 @@
-from urllib.request import Request
 import json
 
-import jsonschema
-from flask import Flask, jsonify, request, abort, Response, send_file, make_response
+from flask import Flask, jsonify, request, abort, make_response
 from jsonschema import validate, ValidationError
-import pandas as pd
-from itertools import chain
-import tempfile
 
 from generator import Generator
 
@@ -39,20 +34,15 @@ def validate_json(json_data):
     return True, message
 
 
-# return  list(map(tuple, fake_data_list))
-
-
 @app.route("/generate/test/data", methods=["POST"])
 def generate_data():
     if not request.json:
         abort(400)
     content = request.json
-    # fake_data = []
     # validate it
     is_valid, msg = validate_json(content)
     if is_valid:
         gen = Generator(content)
-        # fake_data += gen.handler()
         resp = make_response(gen.handler().to_csv())
         resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
         resp.headers["Content-Type"] = "text/csv"

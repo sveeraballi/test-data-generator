@@ -25,9 +25,12 @@
               "type": "number"
             }
           },
-          "constant_value": {
+          "enums": {
             "description": "whether the column values are constants",
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
