@@ -53,13 +53,15 @@ class Generator(object):
                 elif data_type == 'date':
                     data_list.append(date)
                 elif data_type == 'year':
-                    data_list.append(date.split('-')[0])
+                    data_list.append(int(date.split('-')[0]))
                 elif data_type == 'month':
                     data_list.append(date.split('-')[1])
                 elif data_type == 'day':
                     data_list.append(date.split('-')[2])
                 elif data_type == 'year_month':
                     data_list.append(date.split('-')[0] + date.split('-')[1])
+                elif data_type == 'contractnumber':
+                    data_list.append(fake.bothify(text='##??###', letters=fake.random_element(elements=enums)))
                 elif data_type == 'int':
                     if value_range is None:
                         data_list.append(fake.random_int(min=0, max=9999))
